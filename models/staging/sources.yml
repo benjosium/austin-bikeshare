@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: austin_bikeshare
+    database: austin-bikeshare-476201
+    schema: austin_bikeshare
+    tables:
+      - name: bikeshare_stations
+        description: "Raw data of bikeshare stations"
+      - name: bikeshare_trips
+        description: "Raw data of bikeshare trips"

@@ -20,8 +20,9 @@ with source as (
         notes,
         council_district,
         image,
-        modified_date
-    from `austin-bikeshare-476201.austin_bikeshare.bikeshare_stations`
+        modified_date,
+        current_timestamp() as ingestion_date
+    from {{ source('austin_bikeshare', 'bikeshare_stations') }}
 )
 
 select *
