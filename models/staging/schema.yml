@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_bikeshare_stations
+    description: "Staging de stations"
+    columns:
+      - name: station_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_bikeshare_trips
+    description: "Staging de trips"
+    columns:
+      - name: trip_id
+        tests:
+          - not_null
+          - unique
+
+      - name: start_station_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_bikeshare_stations')
+                field: station_id
