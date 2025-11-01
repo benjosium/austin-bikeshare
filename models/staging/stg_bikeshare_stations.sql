@@ -1,6 +1,7 @@
-{{config(
+{{ config(
     materialized='incremental',
-    unique_key='station_id'
+    unique_key='station_id',
+    incremental_strategy='merge'
 ) }}
 
 with source as (
@@ -27,7 +28,3 @@ with source as (
 
 select *
 from source
-
-{% if is_incremental() %}
-    where modified_date > (select max(modified_date) from {{this}})
-{% endif %}

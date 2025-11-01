@@ -1,6 +1,7 @@
 {{ config(
     materialized='incremental',
-    unique_key='trip_id'
+    unique_key='trip_id',
+    incremental_strategy='merge'
 ) }}
 
 with source as (
@@ -23,7 +24,7 @@ with source as (
 select *
 from source
 where start_station_id is not null
-  and start_station_id in (select station_id from {{ source('austin_bikeshare', 'bikeshare_stations') }})
-{% if is_incremental() %}
-  and start_time > coalesce((select max(start_time) from {{ this }}), timestamp('1970-01-01'))
-{% endif %}
+  and start_station_id in (
+      select station_id
+      from {{ source('austin_bikeshare', 'bikeshare_stations') }}
+  )
